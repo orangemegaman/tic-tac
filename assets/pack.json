@@ -1,0 +1,36 @@
+{
+  "preload": {
+    "files": [
+      {
+        "type": "image",
+        "key": "background",
+        "url": "./assets/images/background.jpg"
+      },
+      {
+        "type": "image",
+        "key": "cellEmpty",
+        "url": "./assets/images/cellEmpty.jpg"
+      },
+      {
+        "type": "image",
+        "key": "cellX",
+        "url": "./assets/images/cellX.jpg"
+      },
+      {
+        "type": "image",
+        "key": "cellZero",
+        "url": "./assets/images/cellZero.jpg"
+      },
+      {
+        "type": "image",
+        "key": "cellXHighlighted",
+        "url": "./assets/images/cellXHighlighted.jpg"
+      },
+      {
+        "type": "image",
+        "key": "cellZeroHighlighted",
+        "url": "./assets/images/cellZeroHighlighted.jpg"
+      }
+    ]
+  }
+}
