@@ -1,4 +1,5 @@
 import { defaultSettings } from '../GameConfig';
+import { convertCoordsToFlat, convertFlatToCoords } from '../utils/utils';
 import Cell from './Cell';
 
 export default class AI {
@@ -6,12 +7,17 @@ export default class AI {
 	lastMove: boolean = true;
 	moves: number = 0;
 	cells: Cell[] = [];
+	Engine: Worker = null;
 
 	constructor(cells: Cell[]) {
 		this.cells = cells;
+		this.Engine = new Worker(new URL('./mtdf(10)_worker.js', import.meta.url));
+		console.log(this.Engine);
 	}
 
 	public setBoard(pos: number): boolean {
+		const coords = convertFlatToCoords(pos);
+
 		if (this.board[pos] === ' ') {
 			this.board[pos] = this.lastMove ? 'x' : 'o';
 			const currenCell = this.cells.find((cell) => +cell.id === pos);
@@ -26,7 +32,6 @@ export default class AI {
 
 	private checkWinner(board: string[]) {
 		const winner = this.checkWin(board);
-		console.log(winner);
 
 		if (!winner) {
 			this.lastMove = !this.lastMove;
@@ -34,6 +39,10 @@ export default class AI {
 				setTimeout(this.makeMove.bind(this), 1);
 			}
 		} else {
+			setTimeout(() => {
+				alert(this.lastMove ? 'YOU WINNN' : 'LOOSER');
+			}, 100);
+
 			// 164
 			// $('#move').text((last_move ? '[x]' : '[o]') + ' win');
 			// $('.last').removeClass('last');

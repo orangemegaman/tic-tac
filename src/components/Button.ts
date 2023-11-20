@@ -1,4 +1,6 @@
 export default class Button {
+	private buttonContainer: Phaser.GameObjects.Container;
+
 	constructor(
 		scene: Phaser.Scene,
 		x: number,
@@ -9,22 +11,27 @@ export default class Button {
 		texture: string,
 		hoverTexture: string,
 		text: string,
+		scale: number = 0.4,
 		callback: () => void
 	) {
-		const buttonText = scene.add.text(0, 0, text).setInteractive({ useHandCursor: true });
-		const buttonImage = scene.add
-			.image(x, y, 'ui', texture)
-			.setOrigin(0)
-			.setInteractive({ useHandCursor: true });
-		buttonImage.scale = 0.4;
+		const buttonText = scene.add.text(0, 0, text).setColor(fontColor).setOrigin(0.5);
+		const buttonImage = scene.add.image(0, 0, 'ui', texture);
+		buttonImage.scale = scale;
 
-		const buttonContainer = scene.add.container(x, y, [buttonImage, buttonText]);
+		this.buttonContainer = scene.add.container(x, y, [buttonImage, buttonText]);
 
-		buttonContainer
-			.on('pointerdown', () => callback())
+		this.buttonContainer
+			.setSize(buttonImage.displayWidth, buttonImage.displayHeight)
+			.setInteractive();
+		this.buttonContainer
+			.on('pointerdown', function () {
+				callback();
+			})
 			.on('pointerover', () => {})
 			.on('pointerout', () => {});
+	}
 
-		scene.input.setHitArea(buttonContainer).on('gameobjectdown', callback, scene);
+	get container() {
+		return this.buttonContainer;
 	}
 }
